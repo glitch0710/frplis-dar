@@ -70,7 +70,7 @@ class Farmer(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.assigned_id
+        return self.first_name + ' ' + self.last_name
 
     def save(self, *args, **kwargs):
         while not self.assigned_id:
