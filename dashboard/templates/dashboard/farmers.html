@@ -1,0 +1,91 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}Farmers{% endblock title %}
+
+{% block content %}
+
+<main>
+    <header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10">
+        <div class="container">
+            <div class="page-header-content pt-4">
+                <div class="row align-items-center justify-content-between">
+                    <div class="col-auto mt-4">
+                        <h1 class="page-header-title">
+                            <div class="page-header-icon"><i data-feather="user-check"></i></div>
+                            Farmers
+                        </h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Main page content-->
+    <div class="container mt-n10">
+        <div class="card mb-4">
+            <div class="card-header">Farmer List</div>
+            {% if messages %}
+                {% include 'dashboard/includes/messages.html' %}
+            {% endif %}
+            <div class="card-body">
+                <div class="datatable">
+                    <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Firstname</th>
+                                <th>Lastname</th>
+                                <th>Gender</th>
+                                <th>Address</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>ID</th>
+                                <th>Firstname</th>
+                                <th>Lastname</th>
+                                <th>Gender</th>
+                                <th>Address</th>
+                                <th>Actions</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            {% for farmer in farmers %}
+                                <tr>
+                                    <td scope="row">{{ farmer.assigned_id }}</td>
+                                    <td>{{ farmer.first_name }}</td>
+                                    <td>{{ farmer.last_name }}</td>
+                                    <td>{% if farmer.gender == 'M' %} Male {% else %} Female {% endif %}</td>
+                                    <td>{{ farmer.address }}</td>
+                                    <td>
+                                        <a class="btn btn-datatable btn-icon btn-transparent-dark mr-2" href="#"><i data-feather="eye"></i></a>
+                                        <a class="btn btn-datatable btn-icon btn-transparent-dark"><i data-feather="trash-2"></i></a>
+                                        {% comment %} <a type="button" class="btn btn-outline-primary btn-sm text-primary" href="{% url 'view_user' data.id %}">View</a>
+                                        <a type="button" class="btn btn-outline-primary btn-sm text-primary" href="{% url 'view_farmer' data.id %}">Profile</a> {% endcomment %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="card card-icon mb-4">
+            <div class="row no-gutters">
+                <div class="col-auto card-icon-aside bg-primary"><i class="mr-1 text-white-50" data-feather="user-plus"></i></div>
+                <div class="col">
+                    <div class="card-body py-5">
+                        <h5 class="card-title">Add new Farmer</h5>
+                        {% comment %} <p class="card-text">Fill in important details</p> {% endcomment %}
+                        <a class="btn btn-primary btn-sm" href="{% url 'dashboard:new_farmer' %}">
+                            <i class="mr-1" data-feather="external-link"></i>
+                            New Farmer
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock content %}

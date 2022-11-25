@@ -1,0 +1,270 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}New Farmer{% endblock title %}
+
+{% block content %}
+
+<header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
+    <div class="container-fluid">
+        <div class="page-header-content">
+            <div class="row align-items-center justify-content-between pt-3">
+                <div class="col-auto mb-3">
+                    <h1 class="page-header-title">
+                        <div class="page-header-icon"><i data-feather="user"></i></div>
+                        New Farmer
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Main page content-->
+<div class="container mt-4">
+    <hr class="mt-0 mb-4" />
+    {% if messages %}
+        {% include 'dashboard/includes/messages.html' %}
+    {% endif %}
+    <form class="needs-validation" method="POST" enctype="multipart/form-data" novalidate>
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-xl-12">
+                <!-- Account details card-->
+                <div class="card mb-4">
+                    <div class="card-header">Farmer Details</div>
+                    <div class="card-body">
+                        <!-- Form Row-->
+                        <div class="form-row">
+                            <!-- Form Group (first name)-->
+                            <div class="form-group col-md-6">
+                                <label class="small mb-1" for="id_first_name">First name</label>
+                                {{ farmer_form.first_name }}
+                                <div class="invalid-feedback">
+                                    This field is required
+                                </div>
+                            </div>
+                            <!-- Form Group (last name)-->
+                            <div class="form-group col-md-6">
+                                <label class="small mb-1" for="id_last_name">Last name</label>
+                                {{ farmer_form.last_name }}
+                                <div class="invalid-feedback">
+                                    This field is required
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Form Group -->
+                        <div class="form-group">
+                            <label class="small mb-1" for="id_middle_name">Middlename</label>
+                            {{ farmer_form.middle_name }}
+                            <div class="invalid-feedback">
+                                This field is required
+                            </div>
+                        </div>
+                        <!-- Form Row        -->
+                        <div class="form-row">
+                            <!-- Form Group -->
+                            <div class="form-group col-md-6">
+                                <label class="small mb-1" for="id_gender">Gender</label>
+                                {{ farmer_form.gender }}
+                                <div class="invalid-feedback">
+                                    This field is required
+                                </div>
+                            </div>
+                            <!-- Form Group (location)-->
+                            <div class="form-group col-md-6">
+                                <label class="small mb-1" for="id_birthdate">Birthdate</label>
+                                {{ farmer_form.birthdate }}
+                                <div class="invalid-feedback">
+                                    This field is required
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Form Row        -->
+                        <div class="form-row">
+                            <!-- Form Group -->
+                            <div class="form-group col-md-6">
+                                <label class="small mb-1" for="id_civil_status">Civil Status</label>
+                                {{ farmer_form.civil_status }}
+                                <div class="invalid-feedback">
+                                    This field is required
+                                </div>
+                            </div>
+                            <!-- Form Group -->
+                            <div class="form-group col-md-6">
+                                <label class="small mb-1" for="id_contact_no">Contact No</label>
+                                {{farmer_form.contact_no}}
+                                <div class="invalid-feedback">
+                                    This field is required
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Form Group-->
+                        <div class="form-group">
+                            <label class="small mb-1" for="id_nationality">Nationality</label>
+                            {{ farmer_form.nationality }}
+                            <div class="invalid-feedback">
+                                This field is required
+                            </div>
+                        </div>
+                        <!-- Form Group-->
+                        <div class="form-group">
+                            <label class="small mb-1" for="id_address">Address</label>
+                            {{ farmer_form.address }}
+                            <div class="invalid-feedback">
+                                This field is required
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-6">
+                <!-- Profile picture card-->
+                <div class="card">
+                    <div class="card-header">Other details</div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label class="small mb-1" for="id_tin">TIN</label>
+                            {{ farmer_form.tin }}
+                            <div class="invalid-feedback">
+                                This field is required
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="small mb-1" for="id_philhealth">PhilHealth</label>
+                            {{ farmer_form.philhealth }}
+                            <div class="invalid-feedback">
+                                This field is required
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="small mb-1" for="id_sss">SSS</label>
+                            {{ farmer_form.sss }}
+                            <div class="invalid-feedback">
+                                This field is required
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="small mb-1" for="id_pagibig">PagIbig</label>
+                            {{ farmer_form.pagibig }}
+                            <div class="invalid-feedback">
+                                This field is required
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6">
+                <!-- Profile picture card-->
+                <div class="card">
+                    <div class="card-header">Attachments</div>
+                    <div class="card-body">
+                        <label class="small mb-1">ID Picture</label>
+                        <div class="custom-file">
+                            {{ farmer_att.id_picture }}
+                            <label class="custom-file-label" for="id_id_picture">Choose file</label>
+                        </div>
+                        <div class="invalid-feedback">
+                            This field is required
+                        </div>
+                        <br><label class="small mb-1">Cedula</label>
+                        <div class="custom-file">
+                            {{ farmer_att.cedula }}
+                            <label class="custom-file-label" for="id_cedula">Choose file</label>
+                        </div>
+                        <div class="invalid-feedback">
+                            This field is required
+                        </div>
+                        <br><label class="small mb-1">Barangay Clearance</label>
+                        <div class="custom-file">
+                            {{ farmer_att.brgy_clearance }}
+                            <label class="custom-file-label" for="id_brgy_clearance">Choose file</label>
+                        </div>
+                        <div class="invalid-feedback">
+                            This field is required
+                        </div>
+                        <br><label class="small mb-1">Tax Declaration</label>
+                        <div class="custom-file">
+                            {{ farmer_att.tax_dec }}
+                            <label class="custom-file-label" for="id_tax_dec">Choose file</label>
+                        </div>
+                        <div class="invalid-feedback">
+                            This field is required
+                        </div>
+                        <br><label class="small mb-1">Valid ID 1</label>
+                        <div class="custom-file">
+                            {{ farmer_att.valid_id_one }}
+                            <label class="custom-file-label" for="id_valid_id_one">Choose file</label>
+                        </div>
+                        <div class="invalid-feedback">
+                            This field is required
+                        </div>
+                        <br><label class="small mb-1">Valid ID 2</label>
+                        <div class="custom-file">
+                            {{ farmer_att.valid_id_two }}
+                            <label class="custom-file-label" for="id_valid_id_two">Choose file</label>
+                        </div>
+                        <div class="invalid-feedback">
+                            This field is required
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <!-- Save changes button-->
+                            <button class="btn btn-danger" type="button" data-toggle="modal" data-target="#discardEntry">Discard Entry - Back to Dashboard</button>
+                            <button class="btn btn-primary" type="submit">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="discardEntry" tabindex="-1" role="dialog" aria-labelledby="discardEntryTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="discardEntryTitle">Discard Entry</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">Are you sure you want to discard your entry?</div>
+            <div class="modal-footer"><button class="btn btn-secondary" type="button" data-dismiss="modal">No</button><a class="btn btn-primary" type="button" href="{% url 'dashboard:user_dashboard' %}">Yes</a></div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block custom_js %}
+
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function() {
+      'use strict';
+      window.addEventListener('load', function() {
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.getElementsByClassName('needs-validation');
+        // Loop over them and prevent submission
+        var validation = Array.prototype.filter.call(forms, function(form) {
+          form.addEventListener('submit', function(event) {
+            if (form.checkValidity() === false) {
+              event.preventDefault();
+              event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+          }, false);
+        });
+      }, false);
+    })();
+</script>
+
+{% endblock custom_js %}
