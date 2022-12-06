@@ -121,30 +121,22 @@
                         <div class="row justify-content-center">
                             <div class="col-xxl-6 col-xl-8">
                                 <h3 class="text-primary">Step 2</h3>
-                                <h5 class="card-title">Enter your billing details</h5>
+                                <h5 class="card-title">Enter your area details</h5>
                                 <form>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-                                            <label class="small mb-1" for="inputBillingName">Name on card</label>
-                                            <input class="form-control" id="inputBillingName" type="text" placeholder="Enter the name as it appears on your card" value="Valerie Luna" />
+                                            <label class="small mb-1" for="id_total_area">Total Area</label>
+                                            {{ form.total_area }}
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label class="small mb-1" for="inputBillingCCNumber">Card number</label>
-                                            <input class="form-control" id="inputBillingCCNumber" type="text" placeholder="Enter your credit card number" value="4444 3333 2222 1111" />
+                                            <label class="small mb-1" for="id_profile_field">Profile</label>
+                                            {{ form.profile_field }}
                                         </div>
                                     </div>
                                     <div class="form-row">
-                                        <div class="form-group col-md-4 mb-4 mb-md-0">
-                                            <label class="small mb-1" for="inputOrgName">Card expiry month</label>
-                                            <input class="form-control" id="inputOrgName" type="text" placeholder="Enter expiry month" value="06" />
-                                        </div>
-                                        <div class="form-group col-md-4 mb-4 mb-md-0">
-                                            <label class="small mb-1" for="inputLocation">Card expiry year</label>
-                                            <input class="form-control" id="inputLocation" type="text" placeholder="Enter expiry year" value="2024" />
-                                        </div>
-                                        <div class="form-group col-md-4 mb-0">
-                                            <label class="small mb-1" for="inputLocation">CVV Number</label>
-                                            <input class="form-control" id="inputLocation" type="password" placeholder="Enter CVV number" value="111" />
+                                        <div class="form-group col-md-12 mb-4 mb-md-0">
+                                            <label class="small mb-1" for="id_soil_ph">Soil Ph</label>
+                                            {{ form.soil_ph }}
                                         </div>
                                     </div>
                                     <hr class="my-4" />

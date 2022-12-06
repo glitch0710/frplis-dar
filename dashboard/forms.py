@@ -160,7 +160,6 @@ class UserAreaTechnicalForm(ModelForm):
             }),
             'soil_ph': NumberInput(attrs={
                 'class': "form-control",
-                'type': "text",
                 'placeholder': "Enter value",
             }),
         }
