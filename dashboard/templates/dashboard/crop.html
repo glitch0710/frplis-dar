@@ -1,0 +1,160 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}New Area{% endblock title %}
+
+{% block content %}
+<header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
+    <div class="container-fluid">
+        <div class="page-header-content">
+            <div class="row align-items-center justify-content-between pt-3">
+                <div class="col-auto mb-3">
+                    <h1 class="page-header-title">
+                        <div class="page-header-icon"><i data-feather="user"></i></div>
+                        New Area
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Main page content-->
+<div class="container mt-4">
+    <div class="progress" id="spinner-div" style="display: none;">
+        <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+    <hr class="mt-0 mb-4" />
+    {% if messages %}
+        {% include 'dashboard/includes/messages.html' %}
+    {% endif %}
+    <form class="needs-validation" method="POST" enctype="multipart/form-data" novalidate>
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-xl-8">
+                <!-- Account details card-->
+                <div class="card mb-4">
+                    <div class="card-header">Specify crops in area</div>
+                    <div class="card-body">
+                        <!-- Form Row-->
+                        <input type="hidden" id="area_id" name="area_id" value="{{ area_id }}"/>
+                        <div class="form-row">
+                            <!-- Form Group (farmer)-->
+                            <div class="form-group col-md-12">
+                                <label class="small mb-1" for="id_crop_planted">Crop: </label>
+                                {{ form_crop.crop_planted }}
+                                <div class="invalid-feedback">
+                                    This field is required
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <!-- Form Group (farmer)-->
+                            <div class="form-group col-md-12">
+                                <label class="small mb-1" for="id_status">Status: </label>
+                                {{ form_crop.status }}
+                                <div class="invalid-feedback">
+                                    This field is required
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="small mb-1" for="id_remarks">Remarks: </label>
+                                {{ form_crop.remarks }}
+                                <div class="invalid-feedback">
+                                    This field is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <!-- Save changes button-->
+                            <button class="btn btn-info" type="button" data-toggle="modal" data-target="#discardEntry">Finish - Back to Dashboard</button>
+                            <button class="btn btn-primary" type="button" onclick="addCrop()">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-4 col-lg-4">
+                <div class="card">
+                    <div class="card-header">Crops</div>
+                    <div class="card-body">
+                        <ul id="croplist"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="discardEntry" tabindex="-1" role="dialog" aria-labelledby="discardEntryTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="discardEntryTitle">Add Crops</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">Are you sure you want to finalize your entry?</div>
+            <div class="modal-footer"><button class="btn btn-secondary" type="button" data-dismiss="modal">No</button><a class="btn btn-primary" type="button" href="{% url 'dashboard:areas' %}">Yes</a></div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block custom_js %}
+<script>
+
+    function addCrop(){
+        $("#croplist").empty()
+        $('#spinner-div').show();
+
+        $.ajax({
+            url: "{% url 'dashboard:add_crop' %}",
+            type: "POST",
+            data: {
+                "crop_planted": $("#id_crop_planted").val(),
+                "status": $("#id_status").val(),
+                "remarks": $("#id_remarks").val(),
+                "area": $("#area_id").val(),
+                "csrfmiddlewaretoken": "{{ csrf_token }}",
+            },
+            dataType: "json",
+            success: function (response) {
+                var items = [];
+                $.each(response, function(i, item) {
+                    items.push('<li>' + item.crop_planted + '</li>')
+                });
+                
+                $("#croplist").append(items.join(''));
+                alert($("#id_crop_planted").val() + ' successfully added')
+                $("#id_status").val("")
+                $("#id_remarks").val("")
+            },
+            complete: function () {
+                $('#spinner-div').hide();
+            }
+        });
+    }
+
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function() {
+        'use strict';
+        window.addEventListener('load', function() {
+          // Fetch all the forms we want to apply custom Bootstrap validation styles to
+          var forms = document.getElementsByClassName('needs-validation');
+          // Loop over them and prevent submission
+          var validation = Array.prototype.filter.call(forms, function(form) {
+            form.addEventListener('submit', function(event) {
+              if (form.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+              form.classList.add('was-validated');
+            }, false);
+          });
+        }, false);
+      })();
+</script>
+{% endblock %}

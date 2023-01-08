@@ -33,8 +33,8 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Area Applied</th>
-                                <th>Crop Planted</th>
-                                <th>Remarks</th>
+                                <th>Firstname</th>
+                                <th>Lastname</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -42,8 +42,8 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Area Applied</th>
-                                <th>Crop Planted</th>
-                                <th>Remarks</th>
+                                <th>Firstname</th>
+                                <th>Lastname</th>
                                 <th>Actions</th>
                             </tr>
                         </tfoot>
@@ -52,8 +52,8 @@
                                 <tr>
                                     <td scope="row">{{ area.id }}</td>
                                     <td>{{ area.total_area }}</td>
-                                    <td>{{ area.crop_planted }}</td>
-                                    <td>{{ area.remarks }}</td>
+                                    <td>{{ area.farmer_id.first_name }}</td>
+                                    <td>{{ area.farmer_id.last_name }}</td>
                                     <td>
                                         <a class="btn btn-datatable btn-icon btn-transparent-dark mr-2" href="#"><i data-feather="eye"></i></a>
                                         <a class="btn btn-datatable btn-icon btn-transparent-dark"><i data-feather="trash-2"></i></a>

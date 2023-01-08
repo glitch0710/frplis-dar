@@ -1,10 +1,11 @@
 from django.shortcuts import HttpResponse, render, redirect
+from django.http import JsonResponse
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from dashboard.models import Farmer, RegionCode, BrgyCode, ProvincialCode, MunCityCode, Profile, UsersAreaInfo
-from dashboard.forms import FarmerForm, FarmerAttachmentsForm, UserAreaTechnicalForm
+from dashboard.models import Farmer, RegionCode, BrgyCode, ProvincialCode, MunCityCode, Profile, UsersAreaInfo, AreaCrop
+from dashboard.forms import FarmerForm, FarmerAttachmentsForm, UserAreaTechnicalForm, AreaCropForm
 import numpy as np
 
 
@@ -143,8 +144,52 @@ def new_area(request):
             'form': form,
         }
         return render(request, 'dashboard/newarea.html', context)
+    else:
+        try:
+            entry_form = UserAreaTechnicalForm(request.POST, request.FILES)
 
+            if entry_form.is_valid():
+                save_entry = entry_form.save(commit=False)
+                save_entry.brgy = str(request.POST.get('brgy'))
+                save_entry.save()
+            else:
+                raise ValueError
 
+            form_crop = AreaCropForm()
+
+            context = {
+                'area_id': save_entry.id,
+                'form_crop': form_crop,
+            }
+
+            return render(request, 'dashboard/crop.html', context)
+
+        except ValueError:
+            messages.error(request, "Error loading data. Please try again.")
+            return redirect('dashboard:new_area')
+
+@login_required(login_url='/auth')
+def add_crop(request):
+    if request.method == 'POST':
+        try:
+            form = AreaCropForm(request.POST)
+
+            if form.is_valid():
+                new_area = form.save(commit=False)
+
+                area = request.POST['area']
+                area_id = UsersAreaInfo.objects.get(id=area)
+                new_area.area_id = area_id
+
+                new_area.save()
+
+                crops = list(AreaCrop.objects.filter(area_id=area_id).values())
+            
+
+                return JsonResponse(data=crops, safe=False)
+        except ValueError:
+            messages.error(request, 'Data entry encountered an error. Please try again.')
+            return redirect('dashboard:new_area')
 
 # User Defined Functions
 

@@ -163,3 +163,26 @@ class UserAreaTechnicalForm(ModelForm):
                 'placeholder': "Enter value",
             }),
         }
+
+
+class AreaCropForm(ModelForm):
+    class Meta:
+        model = AreaCrop
+        fields = [
+            'crop_planted',
+            'status',
+            'remarks',
+        ]
+
+        widgets = {
+            'crop_planted': Select(attrs={
+                'class': "form-control"
+            }),
+            'status': TextInput(attrs={
+                'class': "form-control",
+            }),
+            'remarks': Textarea(attrs={
+                'class': "form-control",
+                'rows': "3"
+            }),
+        }

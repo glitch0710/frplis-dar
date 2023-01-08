@@ -24,4 +24,5 @@ urlpatterns = [
     path('farmers/new', views.new_farmer, name='new_farmer'),
     path('areas', views.areas, name='areas'),
     path('areas/new', views.new_area, name='new_area'),
+    path('areas/new/crop', views.add_crop, name='add_crop'),
 ]
